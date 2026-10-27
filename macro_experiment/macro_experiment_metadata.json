@@ -1,0 +1,131 @@
+{
+  "status": "completed",
+  "executed_at_utc": "2026-10-26T17:36:28.758361+00:00",
+  "baseline_preserved": true,
+  "design": {
+    "training_vintages": [
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014
+    ],
+    "validation_vintages": [
+      2015,
+      2016
+    ],
+    "test_vintages": [
+      2017,
+      2018,
+      2019
+    ],
+    "horizons_months": [
+      12,
+      24,
+      36
+    ],
+    "label_strategy": "complete_eligible",
+    "model_family": "XGBoost",
+    "cohort": "identical rows with all three macro indicators available for each split and horizon",
+    "threshold_tuning": "none; no test-tuned thresholds or hyperparameters"
+  },
+  "macro_series": [
+    "UNRATE",
+    "GDPC1",
+    "USSTHPI"
+  ],
+  "macro_manifest": "data/macro/macro_data_manifest.json",
+  "date_alignment": "first-payment month minus two months; fixed modeled release lags; backward as-of join; per-series maximum age; no future available_date",
+  "bootstrap": {
+    "replicates": 1000,
+    "seed_by_horizon": {
+      "12": 54,
+      "24": 66,
+      "36": 78
+    },
+    "method": "paired loan resampling within observed vintage"
+  },
+  "shap_sample_per_horizon": 500,
+  "reused_saved_models_and_predictions": true,
+  "models": [
+    {
+      "horizon_months": 12,
+      "training_count": 427298,
+      "training_defaults": 2129,
+      "feature_count_baseline": 20,
+      "feature_count_augmented": 23,
+      "random_seed": 54,
+      "xgboost_settings": {
+        "n_estimators": 100,
+        "max_depth": 4,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "tree_method": "hist"
+      }
+    },
+    {
+      "horizon_months": 24,
+      "training_count": 382501,
+      "training_defaults": 7013,
+      "feature_count_baseline": 20,
+      "feature_count_augmented": 23,
+      "random_seed": 66,
+      "xgboost_settings": {
+        "n_estimators": 100,
+        "max_depth": 4,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "tree_method": "hist"
+      }
+    },
+    {
+      "horizon_months": 36,
+      "training_count": 341780,
+      "training_defaults": 12390,
+      "feature_count_baseline": 20,
+      "feature_count_augmented": 23,
+      "random_seed": 78,
+      "xgboost_settings": {
+        "n_estimators": 100,
+        "max_depth": 4,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "tree_method": "hist"
+      }
+    }
+  ],
+  "artifacts": {
+    "predictions": "results\\macro_experiment\\baseline_macro_predictions.parquet",
+    "models": [
+      "models\\macro_experiment\\xgboost_baseline_complete_eligible_12m.joblib",
+      "models\\macro_experiment\\xgboost_macro_augmented_complete_eligible_12m.joblib",
+      "models\\macro_experiment\\xgboost_baseline_complete_eligible_24m.joblib",
+      "models\\macro_experiment\\xgboost_macro_augmented_complete_eligible_24m.joblib",
+      "models\\macro_experiment\\xgboost_baseline_complete_eligible_36m.joblib",
+      "models\\macro_experiment\\xgboost_macro_augmented_complete_eligible_36m.joblib"
+    ],
+    "metrics": "results/macro_experiment/baseline_vs_macro_metrics.csv",
+    "date_alignment_audit": "results/macro_experiment/macro_date_alignment_validation.csv"
+  },
+  "python_version": "3.11.4",
+  "package_versions": {
+    "xgboost": "3.2.0",
+    "scikit-learn": "1.9.1",
+    "shap": "0.51.0"
+  },
+  "limitations": [
+    "No exact origination date field exists; first-payment month is only a proxy.",
+    "Fixed release delays are conservative approximations, not archived release timestamps.",
+    "FRED latest values are revised historical data, not real-time vintages.",
+    "National macro variables do not encode state/property-local conditions.",
+    "Existing 2017-2019 results have prior exposure and are exploratory."
+  ]
+}

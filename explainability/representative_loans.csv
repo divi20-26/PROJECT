@@ -1,0 +1,7 @@
+horizon_months,cluster,vintage,loan_identifier,predicted_default_probability,representative_rule,illustrative_not_population_estimate
+12,0,2018,F18Q10223402,0.0011083520948886871,test-sample loan nearest validation-fitted SHAP cluster center,True
+12,1,2017,F17Q30208686,0.0010568670695647597,test-sample loan nearest validation-fitted SHAP cluster center,True
+24,0,2019,F19Q20121680,0.003238201839849353,test-sample loan nearest validation-fitted SHAP cluster center,True
+24,1,2019,F19Q40306644,0.004264821298420429,test-sample loan nearest validation-fitted SHAP cluster center,True
+36,0,2017,F17Q20283425,0.009120913222432137,test-sample loan nearest validation-fitted SHAP cluster center,True
+36,1,2019,F19Q20155636,0.024224409833550453,test-sample loan nearest validation-fitted SHAP cluster center,True

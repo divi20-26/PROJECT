@@ -1,0 +1,3 @@
+evaluation_period,vintages,entry_rule,risk_score,competing_events,concordance_index,n,defaults
+2017-2019_exploratory,"2017,2018,2019",entry_month == 1; entry after month 1 excluded,36-month predicted default cumulative incidence,voluntary payoff treated as censored for cause-specific concordance,0.6963613344870809,144306,8127
+2020-2022_exploratory,"2020,2021,2022",entry_month == 1; entry after month 1 excluded,36-month predicted default cumulative incidence,voluntary payoff treated as censored for cause-specific concordance,0.7481103655810801,148543,3847

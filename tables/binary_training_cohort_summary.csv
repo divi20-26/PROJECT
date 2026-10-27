@@ -1,0 +1,10 @@
+horizon_months,strategy,training_count,defaults
+12,naive_full,491538,2202
+12,complete_eligible,427298,2129
+12,matched_naive,427298,2085
+24,naive_full,491538,7342
+24,complete_eligible,382501,7013
+24,matched_naive,382501,6796
+36,naive_full,491538,13086
+36,complete_eligible,341780,12390
+36,matched_naive,341780,11884

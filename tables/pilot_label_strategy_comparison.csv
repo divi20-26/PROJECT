@@ -1,0 +1,4 @@
+horizon_months,naive_training_defaults,complete_eligible_loans,complete_horizon_defaults,retrospective_naive_false_negatives,common_population_label_disagreements
+12,2202,427298,2129,45,0
+24,7342,382501,7013,285,0
+36,13086,341780,12390,657,0

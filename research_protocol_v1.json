@@ -1,0 +1,98 @@
+{
+  "protocol_version": "1.0",
+  "frozen_at": "2026-10-25",
+  "status": "prospective_protocol_locked_no_untouched_holdout_available",
+  "registration_note": "This protocol was frozen after exploratory results from 2017-2019 and 2020-2022 had been inspected. It is not a preregistration for those data and applies only prospectively to a future eligible untouched holdout.",
+  "research_question": "Does training-label construction under incomplete follow-up change mortgage-default prediction, model ranking, calibration, or hypothetical review-cost decisions?",
+  "primary_hypotheses": [
+    "Naive labels with immature loans included differ from complete-horizon labels in discrimination or Brier score on a common mature evaluation cohort.",
+    "Label strategy can change model rankings or validation-threshold-based hypothetical decision costs; direction and practical relevance are empirical questions, not assumed."
+  ],
+  "training": {
+    "vintages": "2005-2014",
+    "cutoff": "2014-12-31",
+    "models": [
+      "Logistic Regression",
+      "XGBoost"
+    ],
+    "label_strategies": [
+      "naive_full",
+      "complete_eligible",
+      "matched_naive"
+    ],
+    "survival_model": "delayed-entry cause-specific Cox for default and voluntary payoff",
+    "feature_source": "origination-time features only",
+    "preprocessing_fit_scope": "training cohort separately for each model, strategy, and horizon",
+    "hyperparameters": "fixed pilot settings; no tuning on validation or test cohorts"
+  },
+  "validation": {
+    "vintages": [
+      2015,
+      2016
+    ],
+    "uses": [
+      "threshold selection for the prespecified hypothetical cost grid",
+      "any future model selection or calibration, if explicitly added before opening the holdout"
+    ],
+    "test_outcomes_may_inform_validation": false
+  },
+  "evaluation": {
+    "eligible_holdout_rule": "Use only a future, not previously inspected vintage range with adequate observed follow-up for the full 36-month horizon; ascertain eligibility from raw outcome coverage before examining model performance. Existing vintages through 2024 are not eligible because of prior outcome-coverage inspection or inadequate 36-month maturity.",
+    "common_population": "At each horizon, compare approaches on identical horizon-mature loans, requiring acquisition entry at month 1 for binary comparisons; voluntary payoff is a non-default competing outcome and early other termination is excluded from complete-case binary evaluation.",
+    "horizons_months": [
+      12,
+      24,
+      36
+    ],
+    "primary_metrics": [
+      "ROC-AUC",
+      "PR-AUC",
+      "Brier score"
+    ],
+    "secondary_metrics": [
+      "calibration intercept and slope",
+      "expected calibration error",
+      "calibration plots",
+      "cause-specific concordance and censor-aware time-dependent metrics when estimable under documented assumptions",
+      "hypothetical mean decision cost"
+    ],
+    "paired_comparison_reference": "naive_full Logistic Regression",
+    "uncertainty": "1000 paired loan bootstrap replicates, resampled within vintage; percentile 95% intervals; report full-sample observed differences",
+    "multiplicity": "No multiplicity correction; all intervals are descriptive and must not be interpreted as confirmatory p-values.",
+    "decision_rule": "Report rankings and interval estimates. Do not claim a material label-handling effect unless ranking, metric, calibration, and cost evidence are consistent and practically interpretable."
+  },
+  "decision_costs": {
+    "formula": "mean(missed_default_cost * false_negative + review_cost_per_flag * flagged)",
+    "threshold_rule": "Choose the threshold minimizing validation cost over exact observed score boundaries plus a threshold above the maximum score for the zero-review action; decisions use probability >= threshold; ties choose the highest threshold.",
+    "missed_default_cost": 1.0,
+    "review_to_missed_default_ratios": [
+      0.001,
+      0.005,
+      0.01,
+      0.025,
+      0.05,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      25.0,
+      100.0
+    ],
+    "assumption_status": "Hypothetical normalized sensitivity scenarios; no lender-specific utility evidence or observed dollar loss estimates support these ratios."
+  },
+  "holdout_integrity": {
+    "prohibited": [
+      "Fitting or refitting a model using holdout outcomes",
+      "Selecting features, transformations, hyperparameters, calibration, thresholds, or scenarios using holdout results",
+      "Describing previously inspected vintages as untouched or confirmatory"
+    ],
+    "after_any_method_change_post_holdout": "The affected holdout analysis becomes exploratory; a new untouched holdout is required for confirmatory claims."
+  },
+  "observation_limitations": [
+    "Performance histories begin at Freddie Mac acquisition; delayed entry cannot reconstruct pre-acquisition performance.",
+    "Cause-specific survival estimates are conditional on observed entry and the stated competing-risk/censoring assumptions."
+  ]
+}

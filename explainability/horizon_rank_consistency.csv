@@ -1,0 +1,4 @@
+horizon_a_months,horizon_b_months,spearman_rank_correlation,feature_count
+12,24,0.9296128707893415,23
+12,36,0.868275515334339,23
+24,36,0.9547511312217197,23

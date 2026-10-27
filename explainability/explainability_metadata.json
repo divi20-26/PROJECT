@@ -1,0 +1,80 @@
+{
+  "status": "completed",
+  "executed_at_utc": "2026-10-26T17:37:36.361608+00:00",
+  "model": "saved XGBoost complete_eligible pilot pipeline",
+  "model_settings": {
+    "n_estimators": 100,
+    "max_depth": 4,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "reg_lambda": 1.0,
+    "tree_method": "hist"
+  },
+  "target": "default by horizon using existing complete-horizon labels",
+  "model_artifacts": [
+    "C:\\Users\\user\\Desktop\\Journal Paper\\models\\pilot\\xgboost_complete_eligible_12m.joblib",
+    "C:\\Users\\user\\Desktop\\Journal Paper\\models\\pilot\\xgboost_complete_eligible_24m.joblib",
+    "C:\\Users\\user\\Desktop\\Journal Paper\\models\\pilot\\xgboost_complete_eligible_36m.joblib"
+  ],
+  "horizons_months": [
+    12,
+    24,
+    36
+  ],
+  "cohorts": {
+    "validation": [
+      2015,
+      2016
+    ],
+    "test": [
+      2017,
+      2018,
+      2019
+    ],
+    "test_interpretation": "previously inspected exploratory cohort, not untouched confirmatory evidence",
+    "sampling": "fixed-seed random sample from loan-ID intersection of all three horizon-mature cohorts",
+    "maximum_per_split": 500
+  },
+  "label_strategy": "complete_eligible",
+  "feature_mapping": "SHAP encoded-input contributions summed within original feature family; exact transformed names also retained separately",
+  "shap": {
+    "method": "TreeExplainer with tree_path_dependent perturbation and raw XGBoost margin output",
+    "scale": "raw model margin (log-odds), not probability points",
+    "maximum_additivity_error": {
+      "validation:12": 3.904438926838338e-06,
+      "test:12": 4.556248313747346e-06,
+      "validation:24": 3.2417592592537403e-06,
+      "test:24": 2.893226337619126e-06,
+      "validation:36": 3.1726517590868752e-06,
+      "test:36": 3.2514362828806043e-06
+    }
+  },
+  "clustering": {
+    "algorithm": "KMeans on original-feature-family SHAP vectors",
+    "candidate_k": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "selection": "highest silhouette on the validation explanation sample only",
+    "distance": "Euclidean distance on unscaled original-feature-family SHAP vectors",
+    "seed": 42,
+    "n_init": 10,
+    "stability": "mean pairwise adjusted Rand index across five validation-only initial seeds"
+  },
+  "versions": {
+    "python": "3.11.4",
+    "shap": "0.51.0",
+    "xgboost": "3.2.0"
+  },
+  "limitations": [
+    "SHAP describes model associations, not causal effects.",
+    "Clusters are explanation-pattern groups, not borrower types or treatment recommendations.",
+    "Cluster IDs are fit separately per horizon and are not directly comparable across horizons.",
+    "Observed evaluation periods have been inspected previously."
+  ]
+}

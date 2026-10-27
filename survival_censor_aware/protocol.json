@@ -1,0 +1,23 @@
+{
+  "metric_status": "Exploratory; both included vintage groups have been inspected.",
+  "horizons_months": [
+    12,
+    24,
+    36
+  ],
+  "evaluation_entry_rule": "entry_month == 1",
+  "default_event": "default before or at horizon",
+  "competing_nondefault": "voluntary payoff before or at horizon",
+  "censoring": [
+    "other_termination",
+    "right_censored"
+  ],
+  "ipcw_assumption": "Marginal independent censoring, estimated as a discrete-time reverse Kaplan-Meier curve within each evaluation period; no truncation or conditional censoring model.",
+  "concordance": "Cause-specific Harrell concordance using 36-month predicted cumulative incidence as the risk score; payoff and other termination are censored.",
+  "limitations": [
+    "Censoring may depend on borrower and loan characteristics; marginal IPCW can be biased if independent censoring fails.",
+    "C-index treats competing payoff as censored and is not a competing-risk concordance estimand.",
+    "Acquisition histories cannot recover unobserved pre-acquisition performance.",
+    "Metrics are exploratory, not confirmatory, because the evaluation vintages were previously inspected."
+  ]
+}

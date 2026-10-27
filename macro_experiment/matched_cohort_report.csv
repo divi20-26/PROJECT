@@ -1,0 +1,10 @@
+horizon_months,split,rows_before_macro_availability_filter,rows_after_filter,rows_excluded,prediction_date_proxy
+12,training,427298,427298,0,first_payment_month minus two calendar months
+12,validation,95292,95292,0,first_payment_month minus two calendar months
+12,test,144184,144184,0,first_payment_month minus two calendar months
+24,training,382501,382501,0,first_payment_month minus two calendar months
+24,validation,95280,95280,0,first_payment_month minus two calendar months
+24,test,144160,144160,0,first_payment_month minus two calendar months
+36,training,341780,341780,0,first_payment_month minus two calendar months
+36,validation,95278,95278,0,first_payment_month minus two calendar months
+36,test,144153,144153,0,first_payment_month minus two calendar months
